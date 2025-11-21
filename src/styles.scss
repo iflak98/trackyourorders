@@ -1,0 +1,17 @@
+/* Tailwind CSS integration
+	 - After installing dependencies (tailwindcss, postcss, autoprefixer), Tailwind will process
+		 these directives and generate utility classes used across the app.
+*/
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* You can add global overrides below */
+html, body {
+	height: 100%;
+}
+
+body {
+	@apply bg-gray-50 text-gray-900;
+}

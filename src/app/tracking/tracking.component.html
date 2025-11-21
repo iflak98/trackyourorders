@@ -1,0 +1,220 @@
+<div class="min-h-screen bg-gray-100 font-sans text-gray-800 pb-20">
+  <!-- Header -->
+  <header class="bg-[#2874f0] text-white sticky top-0 z-50 shadow-md">
+    <div class="max-w-lg w-full mx-auto px-4 py-3 flex flex-col sm:flex-row sm:items-center sm:justify-between">
+        <div class="flex items-center gap-3">
+        <button class="p-1">←</button>
+        <div class="flex flex-col">
+          <span class="font-bold italic text-lg tracking-wide">Versal Tracking</span>
+          <div class="text-[11px] italic -mt-1 flex items-center text-gray-200">
+            Shipping updates & delivery timeline
+          </div>
+        </div>
+      </div>
+      <div class="flex gap-3 items-center">
+        <!-- small header icons as images -->
+        <!-- <img src="https://img.icons8.com/ios-filled/24/ffffff/search--v1.png" alt="search" class="w-5 h-5"/> -->
+        <!-- <img src="https://img.icons8.com/ios-filled/24/ffffff/shopping-cart.png" alt="cart" class="w-5 h-5"/> -->
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-lg w-full mx-auto p-2 space-y-2">
+    
+    <!-- Order ID Card -->
+    <div class="bg-white p-4 shadow-sm rounded-sm">
+      <div class="flex justify-between items-start">
+        <div>
+          <p class="text-xs text-gray-500 font-medium">Order ID: {{ orderId() }}</p>
+          <h2 class="text-sm font-semibold mt-1">Shipped</h2>
+          
+          <p class="text-xl font-bold text-green-600 mt-0.5">Expected: {{ shippedDate() | date:'mediumDate' }}</p>
+        </div>
+        <a class="text-right" href="https://www.flipkart.com/redmi-note-14-pro-5g-phantom-purple-512-gb/p/itmf69d377f9a8fb?pid=MOBH8BW3PQEAEHQW&lid=LSTMOBH8BW3PQEAEHQWMBMTTP&marketplace=FLIPKART&q=note+14+pro+plus&store=tyy%2F4io&srno=s_1_3&otracker=search&otracker1=search&fm=organic&iid=6cd9a327-49d6-45b1-9b55-5e560a6ba87f.MOBH8BW3PQEAEHQW.SEARCH&ppt=pp&ppn=pp&ssid=ql60j8b2gyk3h3pc1763747721037&qH=08e676f9beab27e0">
+          <!-- make product thumbnail smaller -->
+          <img src={{product().imageUrl}} 
+               class="w-30 h-40 object-cover rounded-md border border-gray-200 ml-auto"
+               onerror="this.src='https://via.placeholder.com/64?text=Phone'"/>
+        </a>
+      </div>
+      
+      <div class="mt-3 flex gap-3 border-t border-gray-100 pt-3">
+        <div class="flex-1">
+          <p class="font-medium text-sm truncate">{{ product().name }}</p>
+          <p class="text-xs text-gray-500">{{ product().color }} | {{ product().storage}} | {{ product().RAM}}</p>
+          <p class="text-sm font-bold mt-1">{{ product().price | currency:'INR':'symbol':'1.0-0' }}</p>
+          <h2 class="text-sm font-semibold text-green-600 mt-1">Prepaid</h2>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delivery Tracking Map/Visual -->
+    <div class="bg-white p-4 shadow-sm rounded-sm relative overflow-hidden">
+        <div class="flex justify-between items-center mb-3">
+            <h3 class="font-semibold text-gray-700">Live Tracking</h3>
+            <span class="text-xs bg-red-100 text-red-600 px-2 py-1 rounded-full font-medium animate-pulse">● Live</span>
+        </div>
+        
+        <!-- Mock Map Area -->
+       <h2 class="text-sm font-semibold text-green-800 mt-1">Delivery Address:</h2>
+        <h2 class="text-sm font-semibold mt-1">Nowpora Lone mohalla,Srinagar, Jammu & Kashmir, India,190003</h2>
+        <h2 class="text-sm font-semibold text-green-800 mt-1">Reciever Name and Phone Number:</h2>
+        <h2 class="text-sm font-semibold mt-1">Sadiyaa,+91-91XXXXX187</h2>
+        <!-- Delivery Agent Info -->
+        <div class="mt-4 flex items-center justify-between bg-gray-50 p-3 rounded border border-gray-100">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center text-lg font-bold text-gray-600">
+                    {{ deliveryAgent().initials }}
+                </div>
+                <div>
+                    <p class="text-sm font-semibold text-gray-800">{{ deliveryAgent().name }}</p>
+                    <p class="text-xs text-gray-500 flex items-center gap-1">
+                        Delivery Partner 
+            <span class="bg-green-600 text-white text-[10px] px-1 rounded flex items-center">4.8</span>
+                    </p>
+                </div>
+            </div>
+            <a class="text-[#2874f0] p-2 rounded-full hover:bg-blue-50" href="tel: +918082802416">Call</a>
+        </div>
+    </div>
+
+    <!-- Timeline Status -->
+    <div class="bg-white p-5 shadow-sm rounded-sm">
+      <h3 class="text-sm font-semibold text-gray-700 mb-4">Delivery Timeline</h3>
+      <div class="relative pl-2">
+        <!-- Vertical Line -->
+        <div class="absolute left-[15px] top-2 bottom-4 w-0.5 bg-gray-200"></div>
+        <div class="absolute left-[15px] top-2 w-0.5 bg-[#008c00] transition-all duration-1000" [style.height.%]="progressHeight()"></div>
+
+        <!-- Step 1: Ordered -->
+        <div class="relative flex gap-4 pb-8 group">
+          <div class="relative z-10 flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center"
+               [ngClass]="getStepClass(0)">
+         @if (currentStepIndex() >= 0) {
+           ✓
+         }
+          </div>
+          <div class="pt-0.5">
+            <p class="text-sm font-medium" [class.text-gray-400]="currentStepIndex() < 0">Ordered</p>
+            @if (currentStepIndex() >= 0) {
+                <p class="text-xs text-gray-500">Mon, 21 Oct - 11:30 PM</p>
+            }
+          </div>
+        </div>
+
+        <!-- Step 2: Shipped -->
+         <div class="relative flex gap-4 pb-8">
+          <div class="relative z-10 flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center transition-colors duration-500"
+               [ngClass]="getStepClass(1)">
+         @if (currentStepIndex() >= 1) {
+           ✓
+         }
+          </div>
+          <div class="pt-0.5">
+            <p class="text-sm font-medium" [class.text-gray-400]="currentStepIndex() < 1">Shipped</p>
+       @if (currentStepIndex() >= 1) {
+        <p class="text-xs text-gray-500">Wed, 22 Nov 2025 - Versal Logistics</p>
+        <p class="text-xs text-gray-400 mt-1">Arrived at {{ arrivedAt() === 'Nearest' ? 'your nearest Hub' : (arrivedAt() + ' Hub') }}</p>
+      }
+          </div>
+        </div>
+
+        <!-- Step 3: Out for Delivery -->
+         <div class="relative flex gap-4 pb-8">
+          <div class="relative z-10 flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center transition-colors duration-500 border-2"
+               [ngClass]="currentStepIndex() === 2 ? 'bg-white border-[#2874f0] animate-pulse' : (currentStepIndex() > 2 ? 'bg-[#008c00] border-[#008c00]' : 'bg-gray-100 border-gray-300')">
+        @if (currentStepIndex() > 2) {
+          ✓
+        }
+                @if (currentStepIndex() === 2) {
+                    <div class="w-2.5 h-2.5 bg-[#2874f0] rounded-full"></div>
+                }
+          </div>
+          <div class="pt-0.5">
+            <p class="text-sm font-medium" [class.text-gray-400]="currentStepIndex() < 2" [class.text-[#2874f0]]="currentStepIndex() === 2">Out for Delivery</p>
+            @if (currentStepIndex() >= 2) {
+                <!-- <p class="text-xs text-gray-500">Today, 2:15 PM</p> -->
+            }
+            @if (currentStepIndex() === 2) {
+                <p class="text-xs text-green-600 mt-1 font-medium">Your item is on the way</p>
+            }
+          </div>
+        </div>
+
+        <!-- Step 4: Delivery -->
+         <div class="relative flex gap-4">
+          <div class="relative z-10 flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center transition-colors duration-500"
+               [ngClass]="getStepClass(3)">
+         @if (currentStepIndex() >= 3) {
+           ✓
+         }
+          </div>
+          <div class="pt-0.5">
+            <p class="text-sm font-medium" [class.text-gray-400]="currentStepIndex() < 3">Delivery</p>
+             @if (currentStepIndex() < 3) {
+                 <p class="text-xs text-gray-500">Expected by {{ shippedDate() | date:'mediumDate' }} </p>
+             }
+             @if (currentStepIndex() >= 3) {
+                 <p class="text-xs text-green-600 font-bold">Delivered Successfully!</p>
+             }
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Info Card -->
+    <div class="bg-blue-50 p-4 rounded-sm border border-blue-100 flex gap-3 items-start">
+        <p class="text-xs text-gray-600 leading-relaxed">
+            Open-box delivery is applicable for this order. Please ensure you inspect the 
+            <span class="font-bold text-gray-800">REDMI Note-14 Pro+ 5G (Phantom Purple, 512 GB)  (12 GB RAM) </span> 
+            physically before sharing the OTP with the delivery agent.
+        </p>
+    </div>
+
+    <!-- Dev controls (testing helpers) - hidden until unlocked via 5 quick taps on Need Help -->
+    <div *ngIf="showDevControls()" class="mt-3 p-2 bg-gray-100 rounded text-xs flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+  <div class="flex flex-col sm:flex-row sm:items-center gap-2 w-full">
+  <button class="px-2 py-1 border rounded bg-white text-xs w-full sm:w-auto" (click)="forceOutForDelivery()">Force Out for Delivery</button>
+  <button class="px-2 py-1 border rounded bg-white text-xs w-full sm:w-auto" (click)="forceShipped()">Force Shipped</button>
+  <input type="date" class="px-2 py-1 border rounded bg-white text-xs w-full sm:w-auto" [value]="(shippedDate() | date:'yyyy-MM-dd')" (change)="setShippedDate($event.target.value)" aria-label="Shipped date picker" />
+      
+  <select class="px-2 py-1 border rounded bg-white text-xs w-full sm:w-auto" [ngModel]="arrivedAt()" (ngModelChange)="setArrivedAt($event)">
+        <option value="Hyderabad">Hyderabad</option>
+        <option value="Chennai">Chennai</option>
+        <option value="Maharastra">Maharastra</option>
+        <option value="Uttar Pradesh">Uttar Pradesh</option>
+        <option value="Delhi">Delhi</option>
+        <option value="Chattigarh">Chattigarh</option>
+        <option value="Chandigarh">Chandigarh</option>
+        <option value="Punjab">Punjab</option>
+        <option value="Jammu">Jammu</option>
+        <option value="Srinagar">Srinagar</option>
+        <option value="Nearest">Nearest</option>
+      </select>
+      <button class="px-2 py-1 border rounded bg-white text-xs w-full sm:w-auto" (click)="forceDelivered()">Force Delivered</button>
+      </div>
+      <div class="flex items-center gap-2 mt-2 sm:mt-0">
+        <div class="text-gray-600">Shipped: {{ shippedDate() | date:'mediumDate' }}</div>
+        <button class="px-2 py-1 text-xs rounded border bg-white text-gray-700 hover:bg-gray-50" (click)="hideDevControls()" title="Hide dev tools and clear persisted settings">Hide Dev Tools</button>
+      </div>
+    </div>
+
+    <!-- Bottom Actions -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
+      <button class="bg-white py-3 border border-gray-200 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 w-full" (click)="onNeedHelpClicked()">
+        Need Help?
+      </button>
+         <button class="bg-white py-3 border border-gray-200 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 w-full">
+            Share Status
+         </button>
+    </div>
+
+    @if (showOtp()) {
+        <div class="bg-white p-4 mt-4 shadow-sm rounded-sm text-center">
+             <p class="text-sm text-gray-500 mb-2">Share this OTP with agent</p>
+             <div class="text-3xl font-bold tracking-[0.5em] text-gray-800">{{ otp }}</div>
+        </div>
+    }
+
+  </main>
+</div>
