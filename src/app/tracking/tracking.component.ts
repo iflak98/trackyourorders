@@ -118,14 +118,30 @@ export class TrackingComponent implements OnInit, OnDestroy {
    */
   checkAndUpdateStatus() {
     const MS_PER_DAY = 24 * 60 * 60 * 1000;
-    const shipped = this.shippedDate();
+    const shipped = new Date("2025-10-21");
+    console.log("shipped,",shipped)
     const now = new Date();
     const days = Math.floor((now.getTime() - shipped.getTime()) / MS_PER_DAY);
+
+    if(days >= 2 && this.currentStepIndex() < 2)
+    {
+      this.arrivedAt.set("Jammu")
+    }
     // Advance to 'Out for Delivery' after 3 full days
     if (days >= 3 && this.currentStepIndex() < 2) {
       this.currentStepIndex.set(2);
+      this.arrivedAt.set("Srinagar")
       // also bump driver progress a bit to reflect movement
       this.driverProgress.set(70);
+      if(days >= 4 &&this.currentStepIndex() == 2)
+      {
+        this.arrivedAt.set("Nearest")
+      }
+       if(days >= 5 &&this.currentStepIndex() == 2)
+      {
+        this.arrivedAt.set("Nearest")
+        this.currentStepIndex.set(3);
+      }
     }
   }
 
@@ -174,6 +190,7 @@ export class TrackingComponent implements OnInit, OnDestroy {
       this.shippedDate.set(d);
       // set status back to 'Shipped' (index 1) after changing the shipped date
       this.currentStepIndex.set(1);
+      this.checkAndUpdateStatus();
       try {
         // persist shipped date as ISO so it round-trips reliably
         localStorage.setItem('tracking.shippedDate', this.shippedDate().toISOString());
