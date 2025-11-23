@@ -15,7 +15,7 @@ export class SearchOrderComponent {
   back() {
     this.router.navigate(['']);
   }
-  orderIdInput: string = '';
+  orderIdInput: string = 'OD129834756234';
 
   searchOrder() {
     // Implement search logic here
