@@ -8,47 +8,116 @@
 .bg-blue-50 {
   background-color: #f0f7ff !important;
 }
-/* From Uiverse.io by vikiWayne */ 
+// <!-- HTML !-->
+// <button class="button" role="button">Button 19</button>
+
+/* CSS */
 .button {
-  padding: 1em 2em;
-  border: none;
-  border-radius: 5px;
-  font-weight: bold;
-  letter-spacing: 5px;
-  text-transform: uppercase;
+  appearance: button;
+  background-color: #FFFFFF;;
+  border: solid transparent;
+  border-radius: 16px;
+  border-width: 0 0 4px;
+  box-sizing: border-box;
+  color: #FFFFFF;
   cursor: pointer;
-  color:  #2874f0;
-  transition: all 1000ms;
-  font-size: 11px;
-  position: relative;
-  overflow: hidden;
-  top:17px !important;
-  outline: 2px solid #2874f0;
+  display: inline-block;
+  font-family: din-round,sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .8px;
+  line-height: 18px;
+  margin: 0;
+  outline: none;
+  overflow: visible;
+  padding: 13px 16px;
+  text-align: center;
+  text-transform: uppercase;
+  touch-action: manipulation;
+  transform: translateZ(0);
+  transition: filter .2s;
+  user-select: none;
+  -webkit-user-select: none;
+  vertical-align: middle;
+  white-space: nowrap;
+  width: 100%;
+  top: 17px !important;
 }
 
-button:hover {
-  color: #ffffff;
-  transform: scale(1.1);
-  outline: 2px solid #70bdca;
-  box-shadow: 4px 5px 17px -4px  #2874f0
-}
-
-button::before {
+.button:after {
+  background-clip: padding-box;
+  background-color: #2874f0;;
+  border: solid transparent;
+  border-radius: 16px;
+  border-width: 0 0 4px;
+  bottom: -4px;
   content: "";
+  left: 0;
   position: absolute;
-  left: -50px;
+  right: 0;
   top: 0;
-  width: 0;
-  height: 100%;
-  background-color:  #2874f0;
-  transform: skewX(45deg);
   z-index: -1;
-  transition: width 1000ms;
 }
 
-button:hover::before {
-  width: 250%;
+.button,
+.button:focus {
+  user-select: auto;
 }
+
+.button:hover:not(:disabled) {
+  filter: brightness(1.1);
+  -webkit-filter: brightness(1.1);
+}
+
+.button:disabled {
+  cursor: auto;
+}
+
+.button:active {
+  border-width: 4px 0 0;
+  background: none;
+}
+/* From Uiverse.io by vikiWayne */ 
+// .button {
+//   padding: 1em 2em;
+//   border: none;
+//   border-radius: 5px;
+//   font-weight: bold;
+//   letter-spacing: 5px;
+//   text-transform: uppercase;
+//   cursor: pointer;
+//   color:  #2874f0;
+//   transition: all 1000ms;
+//   font-size: 11px;
+//   position: relative;
+//   overflow: hidden;
+//   top:17px !important;
+//   outline: 2px solid #2874f0;
+// }
+
+// button:hover {
+//   color: #ffffff;
+//   transform: scale(1.1);
+//   outline: 2px solid #70bdca;
+//   box-shadow: 4px 5px 17px -4px  #2874f0
+// }
+
+// button::before {
+//   content: "";
+//   position: absolute;
+//   left: -50px;
+//   top: 0;
+//   width: 0;
+//   height: 100%;
+//   background-color:  #2874f0;
+//   transform: skewX(45deg);
+//   z-index: -1;
+//   transition: width 1000ms;
+// }
+
+// button:hover::before {
+//   width: 250%;
+// }
 
 
 /* Responsive adjustments */
@@ -66,5 +135,8 @@ button:hover::before {
     font-size: 11px;
     padding: 0.8em 0.5em;
     top: 17px !important;
+  }
+  .notreq{
+    display:none;
   }
 }
