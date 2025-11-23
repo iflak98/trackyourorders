@@ -176,6 +176,7 @@
   <div class="flex flex-col sm:flex-row sm:items-center gap-2 w-full">
   <button class="px-2 py-1 border rounded bg-white text-xs w-full sm:w-auto" (click)="forceOutForDelivery()">Force Out for Delivery</button>
   <button class="px-2 py-1 border rounded bg-white text-xs w-full sm:w-auto" (click)="forceShipped()">Force Shipped</button>
+  <button class="px-2 py-1 border rounded bg-white text-xs w-full sm:w-auto" (click)="removeLocalStorage()">Reset</button>
   <input type="date" class="px-2 py-1 border rounded bg-white text-xs w-full sm:w-auto" [value]="(shippedDate() | date:'yyyy-MM-dd')" (change)="setShippedDate($event.target.value)" aria-label="Shipped date picker" />
       
   <select class="px-2 py-1 border rounded bg-white text-xs w-full sm:w-auto" [ngModel]="arrivedAt()" (ngModelChange)="setArrivedAt($event)">

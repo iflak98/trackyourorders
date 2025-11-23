@@ -47,9 +47,10 @@ export class TrackingComponent implements OnInit, OnDestroy {
   animationInterval: any;
 
   ngOnInit() {
-    this.arrivedAt.set('Hyderabad');
+    this.arrivedAt.set('Chandigarh');
     this.currentStepIndex.set(1);
     this.shippedDate.set(new Date('2025-11-26T00:00:00'));
+    
     // Restore dev-controls visibility and other dev selections from localStorage so the panel
     // and selected values persist across reloads
     try {
@@ -94,6 +95,12 @@ export class TrackingComponent implements OnInit, OnDestroy {
     // Periodically re-check (every minute) so the UI auto-updates while the app is open
     this.statusCheckInterval = setInterval(() => this.checkAndUpdateStatus(), 60 * 1000);
   }
+  removeLocalStorage(){
+localStorage.removeItem('tracking.shippedDate');
+    localStorage.removeItem('tracking.arrivedAt');
+    localStorage.removeItem('tracking.currentStepIndex');
+    localStorage.removeItem('tracking.driverProgress');
+  }
 
   ngOnDestroy() {
     if (this.animationInterval) clearInterval(this.animationInterval);
@@ -123,26 +130,26 @@ export class TrackingComponent implements OnInit, OnDestroy {
     const now = new Date();
     const days = Math.floor((now.getTime() - shipped.getTime()) / MS_PER_DAY);
 
-    if(days >= 2 && this.currentStepIndex() < 2)
-    {
-      this.arrivedAt.set("Jammu")
-    }
+    // if(days >= 2 && this.currentStepIndex() < 2)
+    // {
+    //   this.arrivedAt.set("Jammu")
+    // }
     // Advance to 'Out for Delivery' after 3 full days
-    if (days >= 3 && this.currentStepIndex() < 2) {
-      this.currentStepIndex.set(2);
-      this.arrivedAt.set("Srinagar")
-      // also bump driver progress a bit to reflect movement
-      this.driverProgress.set(70);
-      if(days >= 4 &&this.currentStepIndex() == 2)
-      {
-        this.arrivedAt.set("Nearest")
-      }
-       if(days >= 5 &&this.currentStepIndex() == 2)
-      {
-        this.arrivedAt.set("Nearest")
-        this.currentStepIndex.set(3);
-      }
-    }
+    // if (days >= 3 && this.currentStepIndex() < 2) {
+    //   this.currentStepIndex.set(2);
+    //   this.arrivedAt.set("Srinagar")
+    //   // also bump driver progress a bit to reflect movement
+    //   this.driverProgress.set(70);
+    //   if(days >= 4 &&this.currentStepIndex() == 2)
+    //   {
+    //     this.arrivedAt.set("Nearest")
+    //   }
+    //    if(days >= 5 &&this.currentStepIndex() == 2)
+    //   {
+    //     this.arrivedAt.set("Nearest")
+    //     this.currentStepIndex.set(3);
+    //   }
+    // }
   }
 
   // --- Dev helpers (for testing) ---
