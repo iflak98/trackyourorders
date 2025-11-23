@@ -332,4 +332,19 @@ export class TrackingComponent implements OnInit, OnDestroy {
   back() {
     this.router.navigate(['/search-order']);
   }
+  shareLink() {
+  if (navigator.share) {
+    navigator.share({
+      title: 'Check this out',
+      text: 'Have a look at this link!',
+      url: 'https://trackyourorders.vercel.app/',
+    }).then(() => {
+      console.log('Shared successfully');
+    }).catch((error) => {
+      console.error('Sharing failed:', error);
+    });
+  } else {
+    alert('Share not supported on this browser/device');
+  }
+}
 }
