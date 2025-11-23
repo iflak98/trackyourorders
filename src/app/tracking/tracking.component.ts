@@ -335,8 +335,8 @@ export class TrackingComponent implements OnInit, OnDestroy {
   shareLink() {
   if (navigator.share) {
     navigator.share({
-      title: 'Check this out',
-      text: 'Have a look at this link!',
+      title: 'Share your order details',
+      text: 'my order link',
       url: 'https://trackyourorders.vercel.app/',
     }).then(() => {
       console.log('Shared successfully');
