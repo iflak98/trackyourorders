@@ -10,73 +10,83 @@
 }
 // <!-- HTML !-->
 // <button class="button" role="button">Button 19</button>
-
-/* CSS */
-.button {
-  appearance: button;
-  background-color: #FFFFFF;;
-  border: solid transparent;
-  border-radius: 16px;
-  border-width: 0 0 4px;
-  box-sizing: border-box;
-  color: #FFFFFF;
-  cursor: pointer;
-  display: inline-block;
-  font-family: din-round,sans-serif;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: .8px;
-  line-height: 18px;
-  margin: 0;
-  outline: none;
-  overflow: visible;
-  padding: 13px 16px;
-  text-align: center;
-  text-transform: uppercase;
-  touch-action: manipulation;
-  transform: translateZ(0);
-  transition: filter .2s;
-  user-select: none;
-  -webkit-user-select: none;
-  vertical-align: middle;
-  white-space: nowrap;
-  width: 100%;
-  top: 17px !important;
-}
-
-.button:after {
-  background-clip: padding-box;
-  background-color: #2874f0;;
-  border: solid transparent;
-  border-radius: 16px;
-  border-width: 0 0 4px;
-  bottom: -4px;
+/* subtle grid overlay using pseudo-element */
+.group .map-bg::after {
   content: "";
-  left: 0;
   position: absolute;
-  right: 0;
-  top: 0;
-  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
+  background-size: 80px 80px, 80px 80px;
+  opacity: 0.7;
 }
+/* CSS */
+// .button {
+//   appearance: button;
+//   background-color: #FFFFFF;;
+//   border: solid transparent;
+//   border-radius: 16px;
+//   border-width: 0 0 4px;
+//   box-sizing: border-box;
+//   color: #FFFFFF;
+//   cursor: pointer;
+//   display: inline-block;
+//   font-family: din-round,sans-serif;
+//   font-size: 12px;
+//   font-weight: 600;
+//   letter-spacing: .8px;
+//   line-height: 18px;
+//   margin: 0;
+//   outline: none;
+//   overflow: visible;
+//   padding: 13px 16px;
+//   text-align: center;
+//   text-transform: uppercase;
+//   touch-action: manipulation;
+//   transform: translateZ(0);
+//   transition: filter .2s;
+//   user-select: none;
+//   -webkit-user-select: none;
+//   vertical-align: middle;
+//   white-space: nowrap;
+//   width: 100%;
+//   top: 17px !important;
+// }
 
-.button,
-.button:focus {
-  user-select: auto;
-}
+// .button:after {
+//   background-clip: padding-box;
+//   background-color: #2874f0;;
+//   border: solid transparent;
+//   border-radius: 16px;
+//   border-width: 0 0 4px;
+//   bottom: -4px;
+//   content: "";
+//   left: 0;
+//   position: absolute;
+//   right: 0;
+//   top: 0;
+//   z-index: -1;
+// }
 
-.button:hover:not(:disabled) {
-  filter: brightness(1.1);
-  -webkit-filter: brightness(1.1);
-}
+// .button,
+// .button:focus {
+//   user-select: auto;
+// }
 
-.button:disabled {
-  cursor: auto;
-}
+// .button:hover:not(:disabled) {
+//   filter: brightness(1.1);
+//   -webkit-filter: brightness(1.1);
+// }
 
-.button:active {
-  border-width: 4px 0 0;
-  background: none;
-}
+// .button:disabled {
+//   cursor: auto;
+// }
+
+// .button:active {
+//   border-width: 4px 0 0;
+//   background: none;
+// }
 /* From Uiverse.io by vikiWayne */ 
 // .button {
 //   padding: 1em 2em;
@@ -119,6 +129,15 @@
 //   width: 250%;
 // }
 
+/* Ensure the vertical progress bar looks smooth on small screens */
+.pl-2 {
+  padding-left: 0.5rem !important;
+}
+
+/* Info card and general layout polish */
+.bg-blue-50 {
+  background-color: #f0f7ff !important;
+}
 
 /* Responsive adjustments */
 @media (max-width: 640px) {
@@ -135,8 +154,7 @@
     font-size: 11px;
     padding: 0.8em 1.5em;
     top: 18px !important;
+    width: 100%;
   }
-  .notreq{
-    top:18px !important;
-  }
+  
 }
