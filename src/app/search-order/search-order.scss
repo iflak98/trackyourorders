@@ -1,0 +1,65 @@
+:host {
+  display: block;
+  --accent: #2874f0;
+  --accent-2: #008c00;
+  --muted: #f3f4f6;
+}
+/* Info card and general layout polish */
+.bg-blue-50 {
+  background-color: #f0f7ff !important;
+}
+/* From Uiverse.io by vikiWayne */ 
+.button {
+  padding: 1em 2em;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  color:  #2874f0;
+  transition: all 1000ms;
+  font-size: 11px;
+  position: relative;
+  overflow: hidden;
+  top:17px !important;
+  outline: 2px solid #2874f0;
+}
+
+button:hover {
+  color: #ffffff;
+  transform: scale(1.1);
+  outline: 2px solid #70bdca;
+  box-shadow: 4px 5px 17px -4px  #2874f0
+}
+
+button::before {
+  content: "";
+  position: absolute;
+  left: -50px;
+  top: 0;
+  width: 0;
+  height: 100%;
+  background-color:  #2874f0;
+  transform: skewX(45deg);
+  z-index: -1;
+  transition: width 1000ms;
+}
+
+button:hover::before {
+  width: 250%;
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .driver-img-wrap { width: 40px; height: 40px; }
+  .driver-img { width: 34px; height: 34px; }
+  .dest-img-wrap { width: 36px; height: 36px; }
+  .dest-img { width: 18px; height: 18px; }
+  .map-bg { inset: 0.4rem; }
+  main { padding-left: 0.5rem; padding-right: 0.5rem; }
+  .timeline-step { width: 1.25rem; height: 1.25rem; font-size: 0.75rem; }
+  .bg-blue-50 { padding: 0.75rem; font-size: 13px; }
+  .dev-controls { width: 100%; }
+}

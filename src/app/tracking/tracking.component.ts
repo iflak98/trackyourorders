@@ -1,6 +1,7 @@
-import { Component, OnInit, OnDestroy, signal, computed } from '@angular/core';
+import { Component, OnInit, OnDestroy, signal, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tracking',
@@ -10,6 +11,7 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./tracking.component.scss']
 })
 export class TrackingComponent implements OnInit, OnDestroy {
+  private router= inject(Router);
   // Example data (copied from app logic)
   orderId = signal('OD129834756234');
   product = signal({
@@ -96,7 +98,7 @@ export class TrackingComponent implements OnInit, OnDestroy {
     this.statusCheckInterval = setInterval(() => this.checkAndUpdateStatus(), 60 * 1000);
   }
   removeLocalStorage(){
-localStorage.removeItem('tracking.shippedDate');
+    localStorage.removeItem('tracking.shippedDate');
     localStorage.removeItem('tracking.arrivedAt');
     localStorage.removeItem('tracking.currentStepIndex');
     localStorage.removeItem('tracking.driverProgress');
@@ -326,5 +328,8 @@ localStorage.removeItem('tracking.shippedDate');
         return newProgress;
       });
     }, 200); // Adjust speed as needed
+  }
+  back() {
+    this.router.navigate(['/search-order']);
   }
 }
