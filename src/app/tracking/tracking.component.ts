@@ -34,7 +34,7 @@ export class TrackingComponent implements OnInit, OnDestroy {
 
   // Tracking
   currentStepIndex = signal(0);// 0: Order Placed, 1: Shipped, 2: Out for Delivery, 3: Delivered
-    arrivedAt = signal('Hyderabad'); // Location where the package has currently arrived
+    arrivedAt = signal('jammu'); // Location where the package has currently arrived
   // The date the order was shipped (used to auto-advance status)
   shippedDate = signal(new Date('2025-11-26T00:00:00'));
   statusCheckInterval: any;
@@ -49,9 +49,9 @@ export class TrackingComponent implements OnInit, OnDestroy {
   animationInterval: any;
 
   ngOnInit() {
-    this.arrivedAt.set('Chandigarh');
+    this.arrivedAt.set('Jammu');
     this.currentStepIndex.set(1);
-    this.shippedDate.set(new Date('2025-11-26T00:00:00'));
+    this.shippedDate.set(new Date('2025-11-29T00:00:00'));
     
     // Restore dev-controls visibility and other dev selections from localStorage so the panel
     // and selected values persist across reloads
