@@ -49,9 +49,9 @@ export class TrackingComponent implements OnInit, OnDestroy {
   animationInterval: any;
 
   ngOnInit() {
-    this.arrivedAt.set('Jammu');
+    this.arrivedAt.set('Srinagar');
     this.currentStepIndex.set(1);
-    this.shippedDate.set(new Date('2025-11-29T00:00:00'));
+    this.shippedDate.set(new Date('2025-12-01T00:00:00'));
     
     // Restore dev-controls visibility and other dev selections from localStorage so the panel
     // and selected values persist across reloads
@@ -119,7 +119,7 @@ export class TrackingComponent implements OnInit, OnDestroy {
     return 0;
   });
 
-  showOtp = computed(() => this.currentStepIndex() >= 2);
+  showOtp = computed(() => this.currentStepIndex() >= 1);
 
   /**
    * If 3 or more full days have passed since shippedDate, advance the step to "Out for Delivery" (index 2)
