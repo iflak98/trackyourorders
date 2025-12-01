@@ -24,9 +24,9 @@ export class TrackingComponent implements OnInit, OnDestroy {
   });
 
   deliveryAgent = signal({
-    name: 'Rajesh Kumar',
-    phone: '+91 98765 43210',
-    initials: 'RK'
+    name: 'Akib Raza',
+    phone: '+917780809202',
+    initials: 'AR'
   });
 
   otp = '4592';
@@ -50,47 +50,47 @@ export class TrackingComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.arrivedAt.set('Srinagar');
-    this.currentStepIndex.set(1);
+    this.currentStepIndex.set(4);
     this.shippedDate.set(new Date('2025-12-01T00:00:00'));
     
     // Restore dev-controls visibility and other dev selections from localStorage so the panel
     // and selected values persist across reloads
-    try {
+    // try {
      
-      const shipped = localStorage.getItem('tracking.shippedDate');
-      if (shipped) {
-        const d = new Date(shipped);
-        if (!Number.isNaN(d.getTime())) {
-          this.shippedDate.set(d);
-        }
-      }
-      const arrived = localStorage.getItem('tracking.arrivedAt');
-      if (arrived) {
-        this.arrivedAt.set(arrived);
-      }
-      const step = localStorage.getItem('tracking.currentStepIndex');
-      if (step) {
-        const si = Number(step);
-        if (!Number.isNaN(si)) this.currentStepIndex.set(si);
-      }
-      const prog = localStorage.getItem('tracking.driverProgress');
-      if (prog) {
-        const pv = Number(prog);
-        if (!Number.isNaN(pv)) this.driverProgress.set(pv);
-      }
-      // If there was no persisted step, ensure default is 'Shipped' (index 1)
-      const persistedStep = localStorage.getItem('tracking.currentStepIndex');
-      if (!persistedStep) {
-        this.currentStepIndex.set(1);
-        try {
-          localStorage.setItem('tracking.currentStepIndex', '1');
-        } catch (e) {
-          // ignore
-        }
-      }
-    } catch (e) {
-      // ignore (e.g., localStorage not available)
-    }
+    //   const shipped = localStorage.getItem('tracking.shippedDate');
+    //   if (shipped) {
+    //     const d = new Date(shipped);
+    //     if (!Number.isNaN(d.getTime())) {
+    //       this.shippedDate.set(d);
+    //     }
+    //   }
+    //   const arrived = localStorage.getItem('tracking.arrivedAt');
+    //   if (arrived) {
+    //     this.arrivedAt.set(arrived);
+    //   }
+    //   const step = localStorage.getItem('tracking.currentStepIndex');
+    //   if (step) {
+    //     const si = Number(step);
+    //     if (!Number.isNaN(si)) this.currentStepIndex.set(si);
+    //   }
+    //   const prog = localStorage.getItem('tracking.driverProgress');
+    //   if (prog) {
+    //     const pv = Number(prog);
+    //     if (!Number.isNaN(pv)) this.driverProgress.set(pv);
+    //   }
+    //   // If there was no persisted step, ensure default is 'Shipped' (index 1)
+    //   const persistedStep = localStorage.getItem('tracking.currentStepIndex');
+    //   if (!persistedStep) {
+    //     this.currentStepIndex.set(1);
+    //     try {
+    //       localStorage.setItem('tracking.currentStepIndex', '1');
+    //     } catch (e) {
+    //       // ignore
+    //     }
+    //   }
+    // } catch (e) {
+    //   // ignore (e.g., localStorage not available)
+    // }
     this.startDriverSimulation();
     // Immediately check whether we need to auto-advance the status based on shipped date
     this.checkAndUpdateStatus();
@@ -110,16 +110,29 @@ export class TrackingComponent implements OnInit, OnDestroy {
     if (this.devClickTimer) clearTimeout(this.devClickTimer);
   }
 
-  progressHeight = computed(() => {
-    const step = this.currentStepIndex();
-    if (step === 0) return 15;
-    if (step === 1) return 45;
-    if (step === 2) return 75;
-    if (step >= 3) return 100;
-    return 0;
-  });
+progressHeight = computed(() => {
+  const step = Math.min(this.currentStepIndex(), 4); // cap at 4
+
+  switch (step) {
+    case 0: return 15;  // Ordered
+    case 1: return 35;  // Shipped
+    case 2: return 60;  // Out for Delivery
+    case 3: return 80;  // Delivery
+    case 4: return 92;  // ❌ Not Delivered (STOP HERE)
+    default: return 0;
+  }
+});
+
 
   showOtp = computed(() => this.currentStepIndex() >= 1);
+getWhatsappLink() {
+  const agent = this.deliveryAgent();
+  const order = this.orderId();
+
+  const message = `Hi ${agent.name}, I want an update on my delivery for Order ID ${order}.`;
+
+  return `https://wa.me/${agent.phone}?text=${encodeURIComponent(message)}`;
+}
 
   /**
    * If 3 or more full days have passed since shippedDate, advance the step to "Out for Delivery" (index 2)
@@ -290,20 +303,30 @@ export class TrackingComponent implements OnInit, OnDestroy {
   }
 
   getStepClass(index: number) {
-    if (this.currentStepIndex() > index) {
-      return 'bg-[#008c00] text-white';
-    } else if (this.currentStepIndex() === index) {
-      return 'bg-[#2874f0] text-white ring-4 ring-blue-100';
-    } else {
-      return 'bg-gray-100 text-gray-300 border border-gray-300';
-    }
+
+  // ❌ Step 4 must be checked first
+  
+
+  // Completed steps
+  if (this.currentStepIndex() > index) {
+    return 'bg-[#008c00] text-white';
   }
 
+  // Current step
+  if (this.currentStepIndex() === index) {
+    return 'bg-[#2874f0] text-white ring-4 ring-red-100';
+  }
+
+  // Upcoming steps
+  return 'bg-gray-100 text-gray-300 border border-gray-300';
+}
+
+
   nextStep() {
-    if (this.currentStepIndex() < 3) {
+    if (this.currentStepIndex() < 4) {
       this.currentStepIndex.update(v => v + 1);
-      if (this.currentStepIndex() === 3) {
-        this.driverProgress.set(85);
+      if (this.currentStepIndex() === 4) {
+        this.driverProgress.set(100);
       }
     }
   }
