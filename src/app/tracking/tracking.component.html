@@ -136,7 +136,7 @@
         <!-- Step 3: Out for Delivery -->
          <div class="relative flex gap-4 pb-8">
           <div class="relative z-10 flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center transition-colors duration-500 border-2"
-               [ngClass]="currentStepIndex() === 2 ? 'bg-white border-[#2874f0] animate-pulse' : (currentStepIndex() > 2 ? 'bg-[#008c00] border-[#008c00]' : 'bg-gray-100 border-gray-300')">
+               [ngClass]="currentStepIndex() === 2 ? 'bg-white border-[#2874f0] animate-plus' : (currentStepIndex() > 2 ? 'bg-[#008c00] border-[#008c00]' : 'bg-gray-100 border-gray-300')">
         @if (currentStepIndex() > 2) {
           ✓
         }
@@ -165,7 +165,7 @@
          }
           </div>
           <div class="pt-0.5">
-            <p class="text-sm font-medium" [class.text-gray-400]="currentStepIndex() < 3">Delivery</p>
+            <p class="text-sm font-medium" [class.text-gray-400]="currentStepIndex() < 3">Delivery Attempted</p>
              @if (currentStepIndex() < 3) {
                  <p class="text-xs text-gray-500">Expected by {{ shippedDate() | date:'mediumDate' }} </p>
              }
@@ -184,7 +184,7 @@
          }
           </div>
           <div class="pt-0.5">
-            <p class="text-sm font-medium" [class.text-gray-400]="currentStepIndex() < 4">Not Delivered</p>
+            <p class="text-sm font-medium" [class.text-gray-400]="currentStepIndex() < 4">Not Delivered </p>
              @if (currentStepIndex() < 4) {
                  <p class="text-xs text-gray-500">Expected by {{ shippedDate() | date:'mediumDate' }} </p>
              }
