@@ -24,7 +24,7 @@ export class TrackingComponent implements OnInit, OnDestroy {
   });
 
   deliveryAgent = signal({
-    name: 'Akib Raza',
+    name: 'Owais Raza',
     phone: '+917780809202',
     initials: 'AR'
   });
